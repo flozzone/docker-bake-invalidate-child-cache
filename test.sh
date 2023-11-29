@@ -51,6 +51,6 @@ build "${TEST_TAG}-B"
 
 ls -1 $RUN_DIR/${TEST_TAG}-*
 
-compare_image "docker-test1"
-compare_image "docker-test2"
+compare_image "image1"
+compare_image "image2"
 

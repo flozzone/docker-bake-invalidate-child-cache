@@ -11,7 +11,7 @@ target "image1" {
   dockerfile = "1.Dockerfile"
   cache-to   = ["type=local,dest=${CACHE_DIR}/cache1"]
   cache-from = ["type=local,src=${CACHE_DIR}/cache1"]
-  tags       = ["docker-test1:${TAG}"]
+  tags       = ["image1:${TAG}"]
 }
 
 target "image2" {
@@ -22,5 +22,5 @@ target "image2" {
   }
   cache-to   = ["type=local,dest=${CACHE_DIR}/cache2"]
   cache-from = ["type=local,src=${CACHE_DIR}/cache2"]
-  tags       = ["docker-test2:${TAG}"]
+  tags       = ["image2:${TAG}"]
 }
