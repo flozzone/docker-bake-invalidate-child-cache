@@ -32,8 +32,8 @@ build() {
 compare_image() {
   local IMAGE=$1
 
-  local TESTA_ID=$(docker image ls --digests --format json $IMAGE:${TEST_TAG}-A | jq -r .ID)
-  local TESTB_ID=$(docker image ls --digests --format json $IMAGE:${TEST_TAG}-B | jq -r .ID)
+  local TESTA_ID=$(docker inspect $IMAGE:${TEST_TAG}-A | jq -r '.[0].Id')
+  local TESTB_ID=$(docker inspect $IMAGE:${TEST_TAG}-B | jq -r '.[0].Id')
 
   if [ "$TESTA_ID" != "$TESTB_ID" ]; then
     echo "❌  $IMAGE:${TEST_TAG}-A and $IMAGE:${TEST_TAG}-B images are not the same"
