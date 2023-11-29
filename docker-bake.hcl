@@ -4,7 +4,9 @@ group "default" {
 
 variable "TAG" {}
 
-variable "CACHE_DIR" {}
+variable "CACHE_DIR" {
+  default = "/tmp/docker-test-cache"
+}
 
 target "image1" {
   context    = "."

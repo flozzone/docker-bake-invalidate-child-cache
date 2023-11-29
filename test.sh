@@ -3,7 +3,7 @@
 set -e
 
 TEST_TAG=$1
-export CACHE_DIR=/tmp/docker-test-cache2
+export CACHE_DIR=/tmp/docker-test-cache
 RUN_DIR=/tmp/docker-test-run
 BAKE_SRC=docker-bake.hcl
 
