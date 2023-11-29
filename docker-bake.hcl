@@ -11,8 +11,8 @@ variable "CACHE_DIR" {
 target "image1" {
   context    = "."
   dockerfile = "1.Dockerfile"
-  cache-to   = ["type=local,dest=${CACHE_DIR}/cache1"]
-  cache-from = ["type=local,src=${CACHE_DIR}/cache1"]
+  cache-to   = ["type=local,dest=${CACHE_DIR}/image1"]
+  cache-from = ["type=local,src=${CACHE_DIR}/image1"]
   tags       = ["image1:${TAG}"]
 }
 
@@ -22,7 +22,7 @@ target "image2" {
   contexts   = {
     baseapp = "target:image1"
   }
-  cache-to   = ["type=local,dest=${CACHE_DIR}/cache2"]
-  cache-from = ["type=local,src=${CACHE_DIR}/cache2"]
+  cache-to   = ["type=local,dest=${CACHE_DIR}/image2"]
+  cache-from = ["type=local,src=${CACHE_DIR}/image2"]
   tags       = ["image2:${TAG}"]
 }
