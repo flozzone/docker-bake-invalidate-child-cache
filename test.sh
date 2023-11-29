@@ -24,9 +24,14 @@ build() {
   local RUN_TAG=$1
 
   export TAG=$RUN_TAG
-  docker buildx bake --load --print &> $RUN_DIR/$RUN_TAG-bake.json
+
   docker buildx bake --load
+
+  # for debugging purpose
+  docker buildx bake --load --print &> $RUN_DIR/$RUN_TAG-bake.json
   docker logs buildx_buildkit_builder0 &> $RUN_DIR/$RUN_TAG-buildkitd.log
+  docker inspect image1:$RUN_TAG > $RUN_DIR/$RUN_TAG-image1-manifest.json
+  docker inspect image2:$RUN_TAG > $RUN_DIR/$RUN_TAG-image2-manifest.json
 }
 
 compare_image() {
