@@ -36,9 +36,9 @@ compare_image() {
   local TESTB_ID=$(docker inspect $IMAGE:${TEST_TAG}-B | jq -r '.[0].Id')
 
   if [ "$TESTA_ID" != "$TESTB_ID" ]; then
-    echo "❌  $IMAGE:${TEST_TAG}-A and $IMAGE:${TEST_TAG}-B images are not the same"
+    echo "❌  $IMAGE:${TEST_TAG}-A and $IMAGE:${TEST_TAG}-B have different image IDs"
   else
-    echo "✅  $IMAGE:${TEST_TAG}-A and $IMAGE:${TEST_TAG}-B images are the same"
+    echo "✅  $IMAGE:${TEST_TAG}-A and $IMAGE:${TEST_TAG}-B have same image IDs"
   fi
 }
 
