@@ -32,13 +32,15 @@ build() {
   docker logs buildx_buildkit_builder0 &> $RUN_DIR/$RUN_TAG-buildkitd.log
   docker inspect image1:$RUN_TAG > $RUN_DIR/$RUN_TAG-image1-manifest.json
   docker inspect image2:$RUN_TAG > $RUN_DIR/$RUN_TAG-image2-manifest.json
+
+  unset TAG
 }
 
 compare_image() {
   local IMAGE=$1
 
-  local TESTA_ID=$(docker inspect $IMAGE:${RUN_ID}-A | jq -r '.[0].Id')
-  local TESTB_ID=$(docker inspect $IMAGE:${RUN_ID}-B | jq -r '.[0].Id')
+  local TESTA_ID=$(jq -r '.[0].Id' $RUN_DIR/${RUN_ID}-A-${IMAGE}-manifest.json)
+  local TESTB_ID=$(jq -r '.[0].Id' $RUN_DIR/${RUN_ID}-B-${IMAGE}-manifest.json)
 
   if [ "$TESTA_ID" != "$TESTB_ID" ]; then
     echo "❌  $IMAGE:${RUN_ID}-A and $IMAGE:${RUN_ID}-B have different image IDs"
