@@ -2,7 +2,7 @@
 
 set -e
 
-TEST_TAG=$1
+RUN_ID=$1
 export CACHE_DIR=/tmp/docker-test-cache
 RUN_DIR=/tmp/docker-test-run
 
@@ -37,23 +37,23 @@ build() {
 compare_image() {
   local IMAGE=$1
 
-  local TESTA_ID=$(docker inspect $IMAGE:${TEST_TAG}-A | jq -r '.[0].Id')
-  local TESTB_ID=$(docker inspect $IMAGE:${TEST_TAG}-B | jq -r '.[0].Id')
+  local TESTA_ID=$(docker inspect $IMAGE:${RUN_ID}-A | jq -r '.[0].Id')
+  local TESTB_ID=$(docker inspect $IMAGE:${RUN_ID}-B | jq -r '.[0].Id')
 
   if [ "$TESTA_ID" != "$TESTB_ID" ]; then
-    echo "❌  $IMAGE:${TEST_TAG}-A and $IMAGE:${TEST_TAG}-B have different image IDs"
+    echo "❌  $IMAGE:${RUN_ID}-A and $IMAGE:${RUN_ID}-B have different image IDs"
   else
-    echo "✅  $IMAGE:${TEST_TAG}-A and $IMAGE:${TEST_TAG}-B have same image IDs"
+    echo "✅  $IMAGE:${RUN_ID}-A and $IMAGE:${RUN_ID}-B have same image IDs"
   fi
 }
 
 prune_cache
 recreate_builder
-build "${TEST_TAG}-A"
+build "${RUN_ID}-A"
 recreate_builder
-build "${TEST_TAG}-B"
+build "${RUN_ID}-B"
 
-ls -1 $RUN_DIR/${TEST_TAG}-*
+ls -1 $RUN_DIR/${RUN_ID}-*
 
 compare_image "image1"
 compare_image "image2"
