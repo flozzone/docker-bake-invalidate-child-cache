@@ -5,7 +5,6 @@ set -e
 TEST_TAG=$1
 export CACHE_DIR=/tmp/docker-test-cache
 RUN_DIR=/tmp/docker-test-run
-BAKE_SRC=docker-bake.hcl
 
 BUILDKIT_IMAGE="moby/buildkit:v0.12.3"
 BUILDKIT_FLAGS='--debug'
@@ -25,8 +24,8 @@ build() {
   local RUN_TAG=$1
 
   export TAG=$RUN_TAG
-  docker buildx bake --file $BAKE_SRC --load --print &> $RUN_DIR/$RUN_TAG-bake.json
-  docker buildx bake --file $BAKE_SRC --load
+  docker buildx bake --load --print &> $RUN_DIR/$RUN_TAG-bake.json
+  docker buildx bake --load
   docker logs buildx_buildkit_builder0 &> $RUN_DIR/$RUN_TAG-buildkitd.log
 }
 
