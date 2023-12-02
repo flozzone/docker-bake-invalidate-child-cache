@@ -3,7 +3,6 @@
 set -e
 
 RUN_ID=$1
-export CACHE_DIR=/tmp/docker-test-cache
 RUN_DIR=/tmp/docker-test-run
 
 BUILDKIT_IMAGE="moby/buildkit:v0.12.3"
@@ -54,7 +53,9 @@ compare_image() {
   fi
 }
 
+export CACHE_DIR=$RUN_DIR/${RUN_ID}-cache
 prune_cache
+
 recreate_builder
 build "${RUN_ID}-A"
 recreate_builder
@@ -64,4 +65,3 @@ ls -1 $RUN_DIR/${RUN_ID}-*
 
 compare_image "image1"
 compare_image "image2"
-
