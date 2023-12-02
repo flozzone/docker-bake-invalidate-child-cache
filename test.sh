@@ -61,7 +61,9 @@ build "${RUN_ID}-A"
 recreate_builder
 build "${RUN_ID}-B"
 
-ls -1 $RUN_DIR/${RUN_ID}-*
+echo "Debug output:"
+ls -1d $RUN_DIR/${RUN_ID}-*
 
+echo "Compare output:"
 compare_image "image1"
 compare_image "image2"
