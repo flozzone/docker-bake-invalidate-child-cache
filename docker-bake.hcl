@@ -1,5 +1,7 @@
 group "default" {
   targets = [ "image1", "image2"]
+  # Uncomment next line to not export image2 to docker
+  # targets = [ "image2"]
 }
 
 variable "TAG" {}
@@ -25,6 +27,8 @@ target "image2" {
   dockerfile = "2.Dockerfile"
   contexts   = {
     baseapp = "target:image1"
+    # uncomment next line to set the baseapp image statically. in this case image2 ID stays the same
+    #baseapp = "docker-image://alpine"
   }
   cache-to   = ["type=local,dest=${CACHE_DIR}/image2,${CACHE_ARGS}"]
   cache-from = ["type=local,src=${CACHE_DIR}/image2"]
